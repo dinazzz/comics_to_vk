@@ -3,6 +3,7 @@ import requests
 from random import randint
 from os import makedirs
 from os.path import join as join_path
+from os.path import splitext
 
 
 def download_image(url, directory, filename):
@@ -40,10 +41,11 @@ def fetch_random_comics():
 
 def download_random_comics(directory):
     url, message, id_comics = fetch_random_comics()
-    filename = f'xkcd_{id_comics}.{return_extension(url)}'
+    filename = f'xkcd_{id_comics}{splitext(url)[1]}'
     file_path = download_image(url, directory, filename)
     return [file_path, message]
 
 
 if __name__ == '__main__':
-    download_random_comics('comics')
+    print(download_random_comics)
+
