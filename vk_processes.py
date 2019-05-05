@@ -8,6 +8,8 @@ def get_url_to_upload(group_id, access_token):
                'v': '5.95'
                }
     response = requests.get(url, params=payload)
+    if 'error' in response.json().keys():
+        raise requests.exceptions.HTTPError(response.json()['error'])
     return response.json()['response']
 
 
@@ -16,6 +18,8 @@ def upload_to_vk_server(upload_url, file_path):
     photo = {'photo': image_file_descriptor}
     response = requests.post(upload_url, files=photo)
     image_file_descriptor.close()
+    if 'error' in response.json().keys():
+        raise requests.exceptions.HTTPError(response.json()['error'])
     return response.json()
 
 
@@ -29,6 +33,8 @@ def save_to_album(group_id, server, photo, vk_hash, access_token):
                'v': '5.95'
                }
     response = requests.post(url, data=payload)
+    if 'error' in response.json().keys():
+        raise requests.exceptions.HTTPError(response.json()['error'])
     return response.json()
 
 
@@ -43,6 +49,8 @@ def post_to_wall(group_id, owner_id, photo_id, message, access_token):
                'v': '5.95'
                }
     response = requests.post(url, data=payload)
+    if 'error' in response.json().keys():
+        raise requests.exceptions.HTTPError(response.json()['error'])
     return response.json()
 
 
